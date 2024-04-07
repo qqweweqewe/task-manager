@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: task_api
+    
+    jpa:
+        generate-ddl: true
