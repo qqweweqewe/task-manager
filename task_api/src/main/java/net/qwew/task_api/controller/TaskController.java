@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import net.qwew.task_api.entity.Task;
+import net.qwew.task_api.service.TaskService;
+
 import java.util.List;
 
 @RestController
@@ -47,15 +49,21 @@ public class TaskController {
         return ResponseEntity.ok().body(gson.toJson(task));
     }
     
+    @PatchMapping("/{id}/done")
+    public Task markDone(@PathVariable long id) {
+        Task task = taskService.markDone(id);
+        return task;
+    }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable long id) {
         Task deletedTask = taskService.deleteTask(id);
         return ResponseEntity.ok().body("deleted " + deletedTask.toString());
     }
 
-    @PatchMapping("/{id}/done")
-    public Task markDone(@PathVariable long id) {
-        Task task = taskService.markDone(id);
-        return task;
+    @DeleteMapping
+    public ResponseEntity<String> removeDone() {
+        taskService.removeDone();
+        return ResponseEntity.ok().body("removed completed tasks");
     }
 }
