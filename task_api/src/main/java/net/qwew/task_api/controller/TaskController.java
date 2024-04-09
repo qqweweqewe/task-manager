@@ -63,7 +63,7 @@ public class TaskController {
 
     @DeleteMapping
     public ResponseEntity<String> removeDone() {
-        taskService.removeDone();
-        return ResponseEntity.ok().body("removed completed tasks");
+        List<Task> removed = taskService.removeDone();
+        return ResponseEntity.ok().body(gson.toJson(removed));
     }
 }
